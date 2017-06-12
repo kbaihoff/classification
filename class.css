@@ -12,6 +12,18 @@
   width: auto;
 }
 
+.categorList {
+  margin-bottom: 30px;
+}
+
+h2 {
+  display: none;
+}
+
+.columns {
+  padding: 0;
+}
+
 .item.template {
   display: none;
 }
@@ -65,14 +77,21 @@
 }
 
 .dropdown-content {
+  border: 1px solid black;
   display: none;
+  position: absolute;
+  z-index: 10;
 }
 
 .dropdown-content a {
+  background-color: #A6DDF3;
   color: black;
-  padding: 12px 16px;
-  text-decoration: none;
   display: block;
+  padding: 12px 16px;
+}
+
+.dropdown-content a:hover {
+  background-color: cornflowerblue;
 }
 
 .show {

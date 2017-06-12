@@ -45,7 +45,11 @@ class Class {
 
   addItem(item) {
     const listItem = this.renderListItem(item)
-    this.list.insertBefore(listItem, this.list.firstChild) // Insert the new item before the top item on list
+    const head = item.category + 'H'
+    console.log(document.getElementById(head))
+    const cat = '#' + item.category
+    const categorizedList = document.querySelector(cat)
+    categorizedList.insertBefore(listItem, categorizedList.firstChild)
     if (item.id > this.max) { // If the new item has an ID greater than the "global" ID
       this.max = item.id + 1
     }
@@ -55,13 +59,14 @@ class Class {
 
   addItemViaForm(ev) {
     ev.preventDefault()
-    console.log(document.querySelector('#ddb'))
     const form = ev.target
     const item = {
       id: this.max + 1,
       name: form.itemName.value,
       star: false,
+      category: document.querySelector('#ddb').textContent,
     }
+    console.log(item)
     this.addItem(item)
     form.reset()
   }
@@ -104,11 +109,14 @@ class Class {
 
   moveUp(item, ev) {
     const listItem = ev.target.closest('.item')
+    console.log(listItem)
     const index = this.items.findIndex((current, i) => {
       return (current.id === item.id)
     })
     if (index > 0) {
-      this.list.insertBefore(listItem, listItem.previousElementSibling)
+      const cat = '#' + item.category
+      const categorizedList = document.querySelector(cat)
+      categorizedList.insertBefore(listItem, listItem.previousElementSibling)
       const prev = this.items[index - 1]
       this.items[index - 1] = item
       this.items[index] = prev
@@ -122,7 +130,9 @@ class Class {
       return (current.id === item.id)
     })
     if (index < this.items.length - 1) {
-      this.list.insertBefore(listItem.nextElementSibling, listItem)
+      const cat = '#' + item.category
+      const categorizedList = document.querySelector(cat)
+      categorizedList.insertBefore(listItem.nextElementSibling, listItem)
       const next = this.items[index + 1]
       this.items[index + 1] = item
       this.items[index] = next
