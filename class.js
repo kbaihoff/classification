@@ -23,7 +23,6 @@ class Class {
   }
 
   renderListItem(item) {
-    console.log(item)
     const listItem = this.template.cloneNode(true)
     listItem.classList.remove('template')
     listItem.dataset.id = item.id
@@ -36,9 +35,9 @@ class Class {
 
     listItem.querySelector('button.edit').addEventListener('click', this.edit.bind(this, item)) 
     listItem.querySelector('.itemName').addEventListener('keypress', this.saveOnEnter.bind(this, item))
-    // listItem.querySelector('button.star').addEventListener('click', this.starItem.bind(this, item))
-    // listItem.querySelector('button.move-up').addEventListener('click', this.moveUp.bind(this, item))
-    // listItem.querySelector('button.move-down').addEventListener('click', this.moveDown.bind(this, item))
+    listItem.querySelector('button.star').addEventListener('click', this.starItem.bind(this, item))
+    listItem.querySelector('button.move-up').addEventListener('click', this.moveUp.bind(this, item))
+    listItem.querySelector('button.move-down').addEventListener('click', this.moveDown.bind(this, item))
     listItem.querySelector('button.remove').addEventListener('click', this.removeItem.bind(this))
 
     return listItem
@@ -46,12 +45,12 @@ class Class {
 
   addItem(item) {
     const listItem = this.renderListItem(item)
-    this.list.insertBefore(listItem, this.list.firstChild)
-    if (item.id > this.max) {
+    this.list.insertBefore(listItem, this.list.firstChild) // Insert the new item before the top item on list
+    if (item.id > this.max) { // If the new item has an ID greater than the "global" ID
       this.max = item.id + 1
     }
-    this.items.unshift(item)
-    this.save()
+    this.items.unshift(item) // Add new item to array beginning
+    this.save() // localStorage
   }
 
   addItemViaForm(ev) {
@@ -69,22 +68,22 @@ class Class {
   edit(item, ev) {
     const listItem = ev.target.closest('.item')
     const nameField = listItem.querySelector('.itemName')
-    const btn = listItem.querySelector('.edit.button')
-    const icon = btn.querySelector('i.fa')
-    if (nameField.isContentEditable) {
+    const button = listItem.querySelector('.edit.button')
+    const icon = button.querySelector('i.fa')
+    if (nameField.isContentEditable) { // It currently editable
       nameField.contentEditable = false
       icon.classList.remove('fa-floppy-o')
       icon.classList.add('fa-pencil')
-      btn.classList.remove('success')
+      button.classList.remove('success')
       item.name = nameField.textContent
       this.save()
     }
-    else {
+    else { // If not currently editable
       nameField.contentEditable = true
       nameField.focus()
       icon.classList.remove('fa-pencil')
       icon.classList.add('fa-floppy-o')
-      btn.classList.add('success')
+      button.classList.add('success')
     }
   }
 
@@ -95,12 +94,46 @@ class Class {
     }
   }
 
+  starItem(item, ev) {
+    const listItem = ev.target.closest('.item')
+    listItem.classList.toggle('star')
+    item.star = !item.star
+    this.save()
+  }
+
+  moveUp(item, ev) {
+    const listItem = ev.target.closest('.item')
+    const index = this.items.findIndex((current, i) => {
+      return (current.id === item.id)
+    })
+    if (index > 0) {
+      this.list.insertBefore(listItem, listItem.previousElementSibling)
+      const prev = this.items[index - 1]
+      this.items[index - 1] = item
+      this.items[index] = prev
+      this.save()
+    }
+  }
+
+  moveDown(item, ev) {
+    const listItem = ev.target.closest('.item')
+    const index = this.items.findIndex((current, i) => {
+      return (current.id === item.id)
+    })
+    if (index < this.items.length - 1) {
+      this.list.insertBefore(listItem.nextElementSibling, listItem)
+      const next = this.items[index + 1]
+      this.items[index + 1] = item
+      this.items[index] = next
+      this.save()
+    }
+  }
+
   removeItem(ev) {
     const listItem = ev.target.closest('.item')
     for (let i = 0; i < this.items.length; i++) {
       const currentId = this.items[i].id.toString()
       if (listItem.dataset.id === currentId) {
-        console.log(i)
         this.items.splice(i, 1)
         break
       }
