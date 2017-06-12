@@ -17,24 +17,38 @@
       </a>
     </div>
 
+    <!--INPUT ROW-->
     <div class="row">
       <form id="input-form">
         <div class="input-group">
-          <input type="text" class="input-group-field" name="itemName" placeholder="Add new item" autofocus required>
-          <div class="input-group-button">
+          <div class="input-group-button" style="float: left">
             <button type="submit" class="success button">Add</button>
           </div>
+          <div class="dropdown" style="width: 20%; float: right">
+            <button type="button" id="ddb" class="dropdownButton button" onclick="dropMenu()" style="width: 100%">Choose a category</button>
+            <div id="menu" class="dropdown-content">
+              <a href="#">Dinosaurs</a>
+              <a href="#">Movies</a>
+              <a href="#">TV Shows</a>
+              <a href="#">Other</a>
+            </div>
+          </div>
+          <input type="text" class="input-group-field" name="itemName" placeholder="Add new item" style="width: 72%; float: right" autofocus required>
         </div>
       </form>
     </div>
-    
+
+    <!--LISTS-->
     <div class="row">
-      <div class="medium-9 columns">List Here
+      <div class="medium-9 columns">List 1
         <ul id="item-list" class="no-bullet"></ul>
       </div>
-      <div class="medium-3 columns">Category list</div>
+      <div class="medium-3 columns">List 2
+        <ul id="item-list" class="no-bullet"></ul>
+      </div>
     </div>
 
+    <!--LIST ITEMS-->
     <li class="item template">
       <span class="itemName" contentEditable="false"></span>
       <span class="actions button-group">
@@ -55,6 +69,32 @@
         </button>
       </span>
     </li>
+
+    <script>
+      function dropMenu() {
+        document.getElementById('menu').classList.toggle('show')
+        console.log('dropped')
+      }
+    </script>
+
+    <script>
+      window.onclick = function(ev) {
+        // If the target is not the button
+        if (!ev.target.matches('.dropdownButton')) {
+          let dropdowns = document.getElementsByClassName("dropdown-content");
+          for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+          // If the target is one of the categories
+          if (ev.target.parentElement.matches('.dropdown-content')) {
+            ev.target.parentElement.parentElement.childNodes[1].textContent = ev.target.textContent
+          }
+        }
+      }
+    </script>
 
     <script src="class.js"></script>
   </body>

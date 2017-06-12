@@ -55,6 +55,7 @@ class Class {
 
   addItemViaForm(ev) {
     ev.preventDefault()
+    console.log(document.querySelector('#ddb'))
     const form = ev.target
     const item = {
       id: this.max + 1,
