@@ -51,17 +51,22 @@ class Class {
   addItem(item) {
     const listItem = this.renderListItem(item)
     const listHeader = document.getElementById(item.category + 'H')
-    if (listHeader.style.display === 'none') {
-      listHeader.style.display = 'block'
+    if (listHeader == null) {
+      return false
     }
-    const cat = '#' + item.category
-    const categorizedList = document.querySelector(cat)
-    categorizedList.insertBefore(listItem, categorizedList.firstChild)
-    if (item.id > this.max) { // If the new item has an ID greater than the "global" ID
-      this.max = item.id + 1
+    else {
+      if (listHeader.style.display === 'none') {
+        listHeader.style.display = 'block'
+      }
+      const cat = '#' + item.category
+      const categorizedList = document.querySelector(cat)
+      categorizedList.insertBefore(listItem, categorizedList.firstChild)
+      if (item.id > this.max) { // If the new item has an ID greater than the "global" ID
+        this.max = item.id + 1
+      }
+      this.items.unshift(item) // Add new item to array beginning
+      this.save() // localStorage
     }
-    this.items.unshift(item) // Add new item to array beginning
-    this.save() // localStorage
   }
 
   addItemViaForm(ev) {
@@ -73,8 +78,13 @@ class Class {
       star: false,
       category: document.querySelector('#ddb').textContent,
     }
-    this.addItem(item)
-    form.reset()
+    if (this.addItem(item) !== false) {
+      form.reset()
+      form.childNodes[1].childNodes[3].childNodes[1].textContent = 'Choose a category'
+    }
+    else {
+      console.log('nope')
+    }
   }
 
   filter(ev) {
