@@ -1,3 +1,13 @@
+body {
+  background: #DAB7F5;
+  background: -webkit-linear-gradient(to left, #E8D2F9, #BC72F6);
+  background: linear-gradient(to left, #E8D2F9, #BC72F6);
+}
+
+li.item {
+  background-color: white;
+}
+
 .title, .title2 {
   margin: 20px 0;
 }
