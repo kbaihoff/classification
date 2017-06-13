@@ -1,5 +1,9 @@
-.title {
+.title, .title2 {
   margin: 20px 0;
+}
+
+.title2 {
+  display: none;
 }
 
 .input-group-button {

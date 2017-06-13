@@ -10,6 +10,8 @@ class Class {
       checkboxes[i].addEventListener('click', this.filter.bind(this))
     }
     document.querySelector('#search').addEventListener('keyup', this.searchWord.bind(this))
+    document.querySelector('.title').addEventListener('click', this.titleSwap.bind(this))
+    document.querySelector('.title2').addEventListener('click', this.titleSwap.bind(this))
     this.load()
   }
 
@@ -161,6 +163,16 @@ class Class {
         listItems[i].style.display = 'flex'
       }
     }
+  }
+
+  titleSwap(ev) {
+    let otherPic = ev.target.parentElement.nextElementSibling
+    if (otherPic === null) {
+      otherPic = ev.target.parentElement.previousElementSibling
+    }
+    ev.target.style.display = 'none'
+    console.log(otherPic.childNodes[1].style.display)
+    otherPic.childNodes[1].style.display = 'flex'
   }
 
   edit(item, ev) {
