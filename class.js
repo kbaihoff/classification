@@ -5,7 +5,14 @@ class Class {
     this.list = document.querySelector(selectors.listSelector)
     this.template = document.querySelector(selectors.templateSelector)
     document.querySelector(selectors.formSelector).addEventListener('submit', this.addItemViaForm.bind(this))
+    // document.querySelectorAll('.checkers').addEventListener('click', this.filter.bind(this))
+    // (document.querySelectorAll('.checkers')).map(this.sayhi)
+    document.querySelector('#search').addEventListener('keyup', this.searchWord.bind(this))
     this.load()
+  }
+
+  sayhi() {
+    console.log('hi')
   }
 
   load() {
@@ -46,7 +53,7 @@ class Class {
   addItem(item) {
     const listItem = this.renderListItem(item)
     const head = item.category + 'H'
-    console.log(document.getElementById(head))
+    // console.log(document.getElementById(head))
     const cat = '#' + item.category
     const categorizedList = document.querySelector(cat)
     categorizedList.insertBefore(listItem, categorizedList.firstChild)
@@ -66,9 +73,28 @@ class Class {
       star: false,
       category: document.querySelector('#ddb').textContent,
     }
-    console.log(item)
     this.addItem(item)
     form.reset()
+  }
+
+  filter(ev) {
+    const checkedCategory = ev.target.closest('li').textContent
+    console.log(checkedCategory)
+
+  }
+
+  searchWord(ev) {
+    for (let i = 0; i < this.items.length; i++) {
+      const currentSearch = ev.target.value.toLowerCase() // text in search bar
+      const listItems = document.getElementsByClassName('item') // list item elements
+      const currentListItem = listItems[i]
+      if (!currentListItem.textContent.toLowerCase().includes(currentSearch)) {
+        currentListItem.style.display = 'none'
+      }
+      else {
+        currentListItem.style.display = 'flex'
+      }
+    }
   }
 
   edit(item, ev) {
@@ -109,7 +135,7 @@ class Class {
 
   moveUp(item, ev) {
     const listItem = ev.target.closest('.item')
-    console.log(listItem)
+    // console.log(listItem)
     const index = this.items.findIndex((current, i) => {
       return (current.id === item.id)
     })
