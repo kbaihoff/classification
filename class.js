@@ -79,6 +79,7 @@ class Class {
 
   filter(ev) {
     ev.target.classList.toggle('isChecked')
+    console.log(ev.target.classList)
     const checkboxes = document.querySelectorAll('.checkers')
     const categorizedLists = document.querySelectorAll('.categorList')
     let uncheckedCats = 0
@@ -92,11 +93,15 @@ class Class {
       // None of the boxes have been selected ==> no filter applied
       for (let i = 0; i < categorizedLists.length; i++) {
         const categorizedListItems = categorizedLists[i].childNodes
+        console.log(categorizedListItems.length)
         if (categorizedListItems.length > 0) {
           categorizedLists[i].previousElementSibling.style.display = 'block' // previousElementSibline === h2 for respective category
           for (let j = 0; j < categorizedListItems.length; j++) {
             categorizedListItems[j].style.display = 'flex'
           }
+        }
+        else {
+          categorizedLists[i].previousElementSibling.style.display = 'none' // previousElementSibline === h2 for respective category
         }
       }
     }
