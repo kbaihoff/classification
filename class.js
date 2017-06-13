@@ -50,8 +50,10 @@ class Class {
 
   addItem(item) {
     const listItem = this.renderListItem(item)
-    const head = item.category + 'H'
-    // console.log(document.getElementById(head))
+    const listHeader = document.getElementById(item.category + 'H')
+    if (listHeader.style.display === 'none') {
+      listHeader.style.display = 'block'
+    }
     const cat = '#' + item.category
     const categorizedList = document.querySelector(cat)
     categorizedList.insertBefore(listItem, categorizedList.firstChild)
@@ -90,8 +92,11 @@ class Class {
       // None of the boxes have been selected ==> no filter applied
       for (let i = 0; i < categorizedLists.length; i++) {
         const categorizedListItems = categorizedLists[i].childNodes
-        for (let j = 0; j < categorizedListItems.length; j++) {
-          categorizedListItems[j].style.display = 'flex'
+        if (categorizedListItems.length > 0) {
+          categorizedLists[i].previousElementSibling.style.display = 'block' // previousElementSibline === h2 for respective category
+          for (let j = 0; j < categorizedListItems.length; j++) {
+            categorizedListItems[j].style.display = 'flex'
+          }
         }
       }
     }
@@ -103,6 +108,7 @@ class Class {
           for (let j = 0; j < categorizedLists.length; j++) {
             if (categorizedLists[j].id === thisCategory) {
               // You have obtained the ul of the unchecked category
+              categorizedLists[j].previousElementSibling.style.display = 'none' // previousElementSibline === h2 for respective category
               const categorizedListItems = categorizedLists[j].childNodes
               for (let k = 0; k < categorizedListItems.length; k++) {
                 // Hide all items under the list
@@ -115,8 +121,11 @@ class Class {
           // You have found a checked category; thisCategory is checked
           for (let j = 0; j < categorizedLists.length; j++) {
             if (categorizedLists[j].id === thisCategory) {
+              // You have obtained the ul of the checked category
+              categorizedLists[j].previousElementSibling.style.display = 'block' // previousElementSibline === h2 for respective category
               const categorizedListItems = categorizedLists[j].childNodes
               for (let k = 0; k < categorizedListItems.length; k++) {
+                // Show all items under the list
                 categorizedListItems[k].style.display = 'flex'
               }
             }
@@ -177,7 +186,6 @@ class Class {
 
   moveUp(item, ev) {
     const listItem = ev.target.closest('.item')
-    // console.log(listItem)
     const index = this.items.findIndex((current, i) => {
       return (current.id === item.id)
     })
