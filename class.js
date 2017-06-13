@@ -5,14 +5,12 @@ class Class {
     this.list = document.querySelector(selectors.listSelector)
     this.template = document.querySelector(selectors.templateSelector)
     document.querySelector(selectors.formSelector).addEventListener('submit', this.addItemViaForm.bind(this))
-    // document.querySelectorAll('.checkers').addEventListener('click', this.filter.bind(this))
-    // (document.querySelectorAll('.checkers')).map(this.sayhi)
+    const checkboxes = document.querySelectorAll('.checkers')
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener('click', this.filter.bind(this))
+    }
     document.querySelector('#search').addEventListener('keyup', this.searchWord.bind(this))
     this.load()
-  }
-
-  sayhi() {
-    console.log('hi')
   }
 
   load() {
@@ -78,21 +76,83 @@ class Class {
   }
 
   filter(ev) {
-    const checkedCategory = ev.target.closest('li').textContent
-    console.log(checkedCategory)
+    ev.target.classList.toggle('isChecked')
+    const checkboxes = document.querySelectorAll('.checkers')
+    const categorizedLists = document.querySelectorAll('.categorList')
 
+    for (let i = 0; i < checkboxes.length; i++) {
+      const thisCategory = checkboxes[i].closest('li').textContent
+      if (!checkboxes[i].classList.contains('isChecked')) {
+        // You have found an unchecked category; thisCategory is unchecked
+        for (let j = 0; j < categorizedLists.length; j++) {
+          if (categorizedLists[j].id === thisCategory) {
+            // You have obtained the ul of the unchecked category
+            const categorizedListItems = categorizedLists[j].childNodes
+            for (let k = 0; k < categorizedListItems.length; k++) {
+              // Hide all items under the list
+              categorizedListItems[k].style.display = 'none'
+            }
+          }
+        }
+      }
+      else {
+        // You have found a checked category; thisCategory is checked
+        for (let j = 0; j < categorizedLists.length; j++) {
+          if (categorizedLists[j].id === thisCategory) {
+            const categorizedListItems = categorizedLists[j].childNodes
+            for (let k = 0; k < categorizedListItems.length; k++) {
+              categorizedListItems[k].style.display = 'flex'
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+    // 
+    // const listItems = document.getElementsByClassName('item')
+    // for (let i = 0; i < checkboxes.length; i++) { // FIND unchecked boxes
+    //   if (!checkboxes[i].classList.contains('isChecked')) {
+    //     const uncheckedItem = checkboxes[i].closest('li')
+    //     for (let j = 0; j < this.items.length; j++) { // FIND array items in unchecked categories
+    //       if (this.items[j].category === uncheckedItem.textContent) {
+    //         for (let k = 0; k < this.items.length; k++) { // FIND list items with matching data-set ID
+    //           if (listItems[k].childNodes[1].textContent === this.items[j].name) {
+    //             listItems[k].style.display = 'none'
+    //           }
+    //           else {
+    //             listItems[k].style.display = 'flex'
+    //           }
+    //         } 
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   searchWord(ev) {
-    for (let i = 0; i < this.items.length; i++) {
-      const currentSearch = ev.target.value.toLowerCase() // text in search bar
-      const listItems = document.getElementsByClassName('item') // list item elements
-      const currentListItem = listItems[i]
-      if (!currentListItem.textContent.toLowerCase().includes(currentSearch)) {
-        currentListItem.style.display = 'none'
+    const currentSearch = ev.target.value.toLowerCase() // text in search bar
+    const listItems = document.getElementsByClassName('item') // list item elements
+    for (let i = 0; i < this.items.length; i++) { // listItems includes template ==> one too many
+      if (!listItems[i].textContent.toLowerCase().includes(currentSearch)) {
+        listItems[i].style.display = 'none'
       }
       else {
-        currentListItem.style.display = 'flex'
+        listItems[i].style.display = 'flex'
       }
     }
   }
