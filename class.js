@@ -79,69 +79,51 @@ class Class {
     ev.target.classList.toggle('isChecked')
     const checkboxes = document.querySelectorAll('.checkers')
     const categorizedLists = document.querySelectorAll('.categorList')
+    let uncheckedCats = 0
 
     for (let i = 0; i < checkboxes.length; i++) {
-      const thisCategory = checkboxes[i].closest('li').textContent
       if (!checkboxes[i].classList.contains('isChecked')) {
-        // You have found an unchecked category; thisCategory is unchecked
-        for (let j = 0; j < categorizedLists.length; j++) {
-          if (categorizedLists[j].id === thisCategory) {
-            // You have obtained the ul of the unchecked category
-            const categorizedListItems = categorizedLists[j].childNodes
-            for (let k = 0; k < categorizedListItems.length; k++) {
-              // Hide all items under the list
-              categorizedListItems[k].style.display = 'none'
+        uncheckedCats++
+      }
+    }
+    if (uncheckedCats === checkboxes.length) {
+      // None of the boxes have been selected ==> no filter applied
+      for (let i = 0; i < categorizedLists.length; i++) {
+        const categorizedListItems = categorizedLists[i].childNodes
+        for (let j = 0; j < categorizedListItems.length; j++) {
+          categorizedListItems[j].style.display = 'flex'
+        }
+      }
+    }
+    else {
+      for (let i = 0; i < checkboxes.length; i++) {
+        const thisCategory = checkboxes[i].closest('li').textContent
+        if (!checkboxes[i].classList.contains('isChecked')) {
+          // You have found an unchecked category; thisCategory is unchecked
+          for (let j = 0; j < categorizedLists.length; j++) {
+            if (categorizedLists[j].id === thisCategory) {
+              // You have obtained the ul of the unchecked category
+              const categorizedListItems = categorizedLists[j].childNodes
+              for (let k = 0; k < categorizedListItems.length; k++) {
+                // Hide all items under the list
+                categorizedListItems[k].style.display = 'none'
+              }
             }
           }
         }
-      }
-      else {
-        // You have found a checked category; thisCategory is checked
-        for (let j = 0; j < categorizedLists.length; j++) {
-          if (categorizedLists[j].id === thisCategory) {
-            const categorizedListItems = categorizedLists[j].childNodes
-            for (let k = 0; k < categorizedListItems.length; k++) {
-              categorizedListItems[k].style.display = 'flex'
+        else {
+          // You have found a checked category; thisCategory is checked
+          for (let j = 0; j < categorizedLists.length; j++) {
+            if (categorizedLists[j].id === thisCategory) {
+              const categorizedListItems = categorizedLists[j].childNodes
+              for (let k = 0; k < categorizedListItems.length; k++) {
+                categorizedListItems[k].style.display = 'flex'
+              }
             }
           }
         }
       }
     }
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-    // 
-    // const listItems = document.getElementsByClassName('item')
-    // for (let i = 0; i < checkboxes.length; i++) { // FIND unchecked boxes
-    //   if (!checkboxes[i].classList.contains('isChecked')) {
-    //     const uncheckedItem = checkboxes[i].closest('li')
-    //     for (let j = 0; j < this.items.length; j++) { // FIND array items in unchecked categories
-    //       if (this.items[j].category === uncheckedItem.textContent) {
-    //         for (let k = 0; k < this.items.length; k++) { // FIND list items with matching data-set ID
-    //           if (listItems[k].childNodes[1].textContent === this.items[j].name) {
-    //             listItems[k].style.display = 'none'
-    //           }
-    //           else {
-    //             listItems[k].style.display = 'flex'
-    //           }
-    //         } 
-    //       }
-    //     }
-    //   }
-    // }
   }
 
   searchWord(ev) {
