@@ -3,121 +3,127 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Classification</title>
+    <title>Jeffervescence</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="class.css">
+    <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
     <div class="row">
-      <a>
-        <img src="https://fontmeme.com/permalink/170612/b03afc0e30e0c38723e60c4fe9b9dab7.png" alt="Classification" title="Classification" class="title">
-      </a>
-      <a>
-        <img src="https://fontmeme.com/permalink/170613/6f501309698a6b1f26025588f39765bb.png" alt="Classification" title="Classification" class="title title2">
-      </a>
-    </div>
-
-    <!--INPUT ROW-->
-    <div class="row">
-      <form id="input-form">
-        <div class="input-group">
-          <div class="input-group-button" style="float: left">
-            <button type="submit" class="success button">Add</button>
-          </div>
-          <div class="dropdown" style="width: 20%; float: right">
-            <button type="button" id="ddb" class="dropdownButton button" onclick="dropMenu()" style="width: 100%">Choose a category</button>
-            <div id="menu" class="dropdown-content" style="width: 20%">
-              <a href="#">Complaints</a>
-              <a href="#">Dinosaurs</a>
-              <a href="#">Foods</a>
-              <a href="#">Movies</a>
-              <a href="#">TV Shows</a>
-              <a href="#">Other</a>
+      <div class="medium-10 medium-offset-1 column">
+        <h1><span>Jeff</span>ervescence <small>from Goldblum's house to yours</small></h1>
+        <form id="flick-form">
+          <div class="row">
+            <div class="small-5 column">
+              <input
+                type="text"
+                name="flickName"
+                placeholder="Name a flick"
+                autofocus
+                required
+              >
+            </div>
+            <div class="small-4 column">
+              <select name="genre" required>
+                <option value="">-- Genre --</option>
+                <option value="comedy">Comedy</option>
+                <option value="drama">Drama</option>
+                <option value="sci-fi">Sci-Fi</option>
+              </select>
+            </div>
+            <div class="small-3 column">
+              <button 
+                class="success button expanded"
+                type="submit"
+              >
+                <i
+                  class="fa fa-plus"
+                  aria-hidden="true"
+                ></i>
+              </button>
             </div>
           </div>
-          <input type="text" class="input-group-field" name="itemName" placeholder="Add new item" style="width: 72%; float: right" autofocus required>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
 
-    <!--LISTS-->
     <div class="row">
-      <div class="medium-2 columns">
-        <a>
-          <img src="https://fontmeme.com/permalink/170613/add43dbd65612660d5fd1e31f41af0d7.png" alt="Filter:" title="Filter:" class="title">
-        </a>
-        <ul id="item-list2" class="no-bullet">
-          <li><input class="checkers" type="checkbox">Complaints</li>
-          <li><input class="checkers" type="checkbox">Dinosaurs</li>
-          <li><input class="checkers" type="checkbox">Foods</li>
-          <li><input class="checkers" type="checkbox">Movies</li>
-          <li><input class="checkers" type="checkbox">TV Shows</li>
-          <li><input class="checkers" type="checkbox">Other</li>
-          <input type="text" id="search" name="search" placeholder="Search..." style="width: 80%">
+      <div class="medium-10 medium-offset-1 column">
+        <ul class="tabs" data-tabs id="genres">
+          <li class="tabs-title is-active"><a href="#comedy" aria-selected="true">Comedy</a></li>
+          <li class="tabs-title"><a href="#drama">Drama</a></li>
+          <li class="tabs-title"><a href="#sci-fi">Sci-Fi</a></li>
+          <li class="search">
+            <div class="input-group">
+              <span class="input-group-label">
+                <i
+                  class="fa fa-search"
+                  aria-hidden="true"
+                ></i>
+              </span>
+              <input
+                class="input-group-field"
+                type="text"
+                name="q"
+                placeholder="Filter"
+              >
+            </div>
+          </li>
         </ul>
-      </div>
-      <div class="medium-10 columns listOfLists">
-        <ul id="item-list" class="no-bullet">
-          <h4 id="ComplaintsH" style="display: none">Complaints</h4><ul id="Complaints" class="no-bullet categorList"></ul>
-          <h4 id="DinosaursH" style="display: none">Dinosaurs</h4><ul id="Dinosaurs" class="no-bullet categorList"></ul>
-          <h4 id="FoodsH" style="display: none">Foods</h4><ul id="Foods" class="no-bullet categorList"></ul>
-          <h4 id="MoviesH" style="display: none">Movies</h4><ul id="Movies" class="no-bullet categorList"></ul>
-          <h4 id="TV ShowsH" style="display: none">TV Shows</h4><ul id="TV Shows" class="no-bullet categorList"></ul>
-          <h4 id="OtherH" style="display: none">Other</h4><ul id="Other" class="no-bullet categorList"></ul>
-        </ul>
+        <div class="tabs-content" data-tabs-content="genres">
+          <div class="tabs-panel is-active" id="comedy">
+            <ul class="flick-list" class="no-bullet"></ul>
+          </div>
+          <div class="tabs-panel" id="drama">
+            <ul class="flick-list" class="no-bullet"></ul>
+          </div>
+          <div class="tabs-panel" id="sci-fi">
+            <ul class="flick-list" class="no-bullet"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!--LIST ITEM TEMPLATE-->
-    <li class="item template">
-      <span class="itemName" contentEditable="false"></span>
+    <li class="flick template">
+      <span class="flick-name"></span>
       <span class="actions button-group">
         <button class="edit button">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <i
+            class="fa fa-pencil"
+            aria-hidden="true"
+          ></i>
         </button>
-        <button class="star button warning">
-          <i class="fa fa-star" aria-hidden="true"></i>
+        <button class="fav button warning">
+          <i
+            class="fa fa-star"
+            aria-hidden="true"
+          ></i>
         </button>
         <button class="move-up button">
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i
+            class="fa fa-arrow-up"
+            aria-hidden="true"
+          ></i>
         </button>
         <button class="move-down button">
-          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          <i
+            class="fa fa-arrow-down"
+            aria-hidden="true"
+          ></i>
         </button>
         <button class="remove button alert">
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
+          <i
+            class="fa fa-trash-o"
+            aria-hidden="true"
+          ></i>
         </button>
       </span>
     </li>
 
-    <script>
-      function dropMenu() {
-        document.getElementById('menu').classList.toggle('show')
-      }
-    </script>
-
-    <script>
-      window.onclick = function(ev) {
-        // If the target is not the button
-        if (ev.target.className === 'no-js' || !ev.target.matches('.dropdownButton')) {
-          let dropdowns = document.getElementsByClassName("dropdown-content");
-          for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-              openDropdown.classList.remove('show');
-            }
-          }
-          // If the target is one of the categories
-          if (ev.target.className !== 'no-js' && ev.target.parentElement.matches('.dropdown-content')) {
-            ev.target.parentElement.parentElement.childNodes[1].textContent = ev.target.textContent
-          }
-        }
-      }
-    </script>
-
-    <script src="class.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js" integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
   </body>
 </html>
